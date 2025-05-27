@@ -12,7 +12,7 @@ namespace proyecto
     {
             public enum menu
         {
-            consultar = 1, depositar, retirar, revisard, revisarr, salir
+            consultar = 1, depositar, retirar, revisard, revisarr, deporetiro, salir
 
         }
         static double saldo = 0;
@@ -44,6 +44,9 @@ namespace proyecto
                                 case menu.revisarr:
                                 revisarretiros();
                                 break;
+                            case menu.deporetiro:
+                                deporeti();
+                                break;
                             case menu.salir:
                                 Environment.Exit(0);
                                 break;
@@ -67,7 +70,8 @@ namespace proyecto
             Console.WriteLine("3)Retirar dinero (solo si el saldo es suficiente).");
             Console.WriteLine("4)Revisar historial de depósitos ");
             Console.WriteLine("5)Revisar historial de retiros");
-            Console.WriteLine("6)Salir");
+            Console.WriteLine("6)Depositos o Retiros");
+            Console.WriteLine("7)Salir");
             menu opc = (menu)Convert.ToInt32(Console.ReadLine());
             return opc;
         }
@@ -161,6 +165,19 @@ namespace proyecto
                 Console.WriteLine("Regresando al menu");
             }
         }
+        static void deporeti()
+        {
+            Console.WriteLine($"Depositos: {deposito.Count}");
+            Console.WriteLine($"Retiros: {retiro.Count}");
+            if (deposito.Count>retiro.Count)
+            {
+                Console.WriteLine("Hay mas depositos");
+            }
+            else 
+            {
+                Console.WriteLine("Hay mas retiros");
+            }
+        }
         static bool enviarcorreo(Dictionary<DateTime, double> transacciones)
         {
             string servidorSmtp = "smtp.office365.com";
@@ -184,7 +201,7 @@ namespace proyecto
             };
 
            
-            string cuerpoMensaje = "Las tareas transacciones son:\n\n";
+            string cuerpoMensaje = "Las  transacciones son:\n\n";
             foreach (var c in transacciones)
             {
                 cuerpoMensaje += $"{c.Key}. {c.Value}\n";
